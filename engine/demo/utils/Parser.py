@@ -1,3 +1,10 @@
+from Element import Concept, Instance, Property
+
+concept_list = {}  # 格式concept["concept_id"] = Concept
+instance_list = {}
+property_lit = {}
+
+
 def read_concept_list():
     pass
 
@@ -64,3 +71,7 @@ def main():
     read_property_list()
     read_instance_text()
     read_infobox()
+
+
+if __name__ == "__main__":
+    main()
