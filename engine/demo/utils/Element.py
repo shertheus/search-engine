@@ -25,10 +25,11 @@ class Concept:
 
 
 class Instance:
-    def __init__(self, _id, name, supplement=None):
+    def __init__(self, _id, name, supplement=None, alias=None):
         self.id = _id
         self.name = name
         self.supplement = supplement
+        self.alias = alias
         self.related = []
         self.same = []
         self.url = ""
