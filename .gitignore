@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 .idea/
 /engine/.idea/
+/parser/out/
 
 # C extensions
 *.so
