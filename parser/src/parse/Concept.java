@@ -6,7 +6,7 @@ import java.util.List;
 public class Concept {
     private final String id, name;
     private  String url;
-    private List<String> related, same, instance;
+    private List<String> related, same, instance, sub;
     public Concept (String id, String name) {
         this.id = id;
         this.name = name;
@@ -14,6 +14,7 @@ public class Concept {
         this.related = new ArrayList<>();
         this.same = new ArrayList<>();
         this.instance = new ArrayList<>();
+        this.sub = new ArrayList<>();
     }
 
     public String getId() {
@@ -40,6 +41,10 @@ public class Concept {
         return instance;
     }
 
+    public List<String> getSub() {
+        return sub;
+    }
+
     public void setUrl(String url) {
         this.url = url;
     }
@@ -54,5 +59,9 @@ public class Concept {
 
     public void addInstance (String i) {
         instance.add(i);
+    }
+
+    public void addSub (String s) {
+        sub.add(s);
     }
 }

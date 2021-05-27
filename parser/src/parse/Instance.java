@@ -7,19 +7,19 @@ import java.util.regex.Pattern;
 
 public class Instance {
     private final String id, name;
-    private  String url, comment, sup_alias;
-    private int flag;
-    private List<String> related, same, property, comment_ins;
+    private  String url, comment;
+    private List<String> related, same, property, comment_ins, supplement, alias;
     public Instance (String id, String name) {
         this.id = id;
         this.name = name;
         this.url = "";
         this.comment = "";
-        this.flag = -1;
         this.related = new ArrayList<>();
         this.same = new ArrayList<>();
         this.property = new ArrayList<>();
         this.comment_ins = new ArrayList<>();
+        this.alias = new ArrayList<>();
+        this.supplement = new ArrayList<>();
     }
 
     public String getId() {
@@ -38,17 +38,13 @@ public class Instance {
         return comment;
     }
 
-    public void setSup_alias(String sup_alias, int flag) {
-        this.flag = flag;
-        this.sup_alias = sup_alias;
-    }
-
-    public String getSup_alias() {
-        return sup_alias;
-    }
-
-    public int getFlag() {
-        return flag;
+    public void setSup_alias(String s, int flag) {
+        if (flag == 1) {
+            supplement.add(s);
+        }
+        else {
+            alias.add(s);
+        }
     }
 
     public List<String> getRelated() {
