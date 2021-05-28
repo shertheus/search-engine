@@ -12,7 +12,8 @@ import re
 
 # path = os.path.dirname(os.path.abspath(__file__)) + '\\ttl'
 
-path = "C:\\Users\\shertheus\\Downloads\\ttl"
+#path = "C:\\Users\\shertheus\\Downloads\\ttl"
+path = "E:\\课程\\大三春季\\搜索引擎\\大\\ttl"
 
 
 class parser:

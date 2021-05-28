@@ -5,25 +5,22 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/AppData/Local/Programs/Python/Python38/share/py4j/py4j0.10.9.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../py4j0.10.9.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../lucene-queryparser-8.8.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../lucene-demo-8.8.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../lucene-core-8.8.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../lucene-analyzers-common-8.8.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../IKAnalyzer6.5.0.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="file://$USER_HOME$/Downloads/lib" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-        <jarDirectory url="file://$USER_HOME$/Downloads/lib" recursive="false" />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/src" />
+        </SOURCES>
       </library>
     </orderEntry>
   </component>
