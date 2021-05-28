@@ -1,5 +1,7 @@
 package kernel;
 
+
+
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
@@ -24,7 +26,8 @@ public class createIndex {
         cfg.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
         writer = new IndexWriter(directory,cfg);
     }
-    void addConcept(String id, String name, String ) {
-
+    public void addConcept(String id, String name, String url, String related, String same, String sub, String instance) {
+//        Document document = new Document();
+        System.out.println(related);
     }
 }
