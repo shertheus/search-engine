@@ -26,6 +26,9 @@ class Concept:
     def add_instance(self, instance):
         self.instance.append(instance)
 
+    def getUrl(self):
+        return url
+
 
 class Instance:
     def __init__(self, _id, name):
