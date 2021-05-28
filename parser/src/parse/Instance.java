@@ -73,9 +73,11 @@ public class Instance {
         Matcher m = r.matcher(c);
         while (m.find()){
             String tmp = m.group().split("\\[\\[")[1].split("\\]\\]")[0];
-            System.out.println(tmp);
             if (tmp.contains("|")){
                 String[] t = tmp.split("\\|");
+                if (t[1].contains("$")) {
+                    t[1] = t[1].replaceAll("\\$", "CHAR_DOLLAR");
+                }
                 c = c.replaceFirst("\\[\\[(.*?)\\]\\]", t[1]);
                 this.comment_ins.add(t[0]);
             }

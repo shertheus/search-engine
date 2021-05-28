@@ -9,8 +9,13 @@ public class testClass {
 //        Instance i = new Instance("id", "name");
 //        System.out.println(s1);
 //        i.setComment(s1);
+        long startTime = System.currentTimeMillis();
         Parser parser = Parser.getParser();
-        parser.readConcept();
-        parser.readOthers();
+//        parser.readConcept();
+        parser.readInstance();
+//        parser.readProperty();
+//        parser.readOthers();
+        long endTime = System.currentTimeMillis();
+        System.out.println(endTime - startTime);
     }
 }
