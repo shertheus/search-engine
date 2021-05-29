@@ -5,6 +5,7 @@ __pycache__/
 .idea/
 /engine/.idea/
 /parser/out/
+/parser/indexSource/
 
 # C extensions
 *.so

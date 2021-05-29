@@ -40,6 +40,9 @@ public class Main {
         GatewayServer gatewayServer = new GatewayServer(app);
         gatewayServer.start();
         System.out.println("Gateway Server Started");
+//        Serach serach = new Serach();
+//        serach.queryIndex("bdi");
+
     }
 
 }

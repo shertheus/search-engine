@@ -32,7 +32,7 @@ public class createIndex {
     }
     public void addConcept(String id, String name, String url, String related, String same, String sub, String instance) throws IOException {
         Document doc = new Document();
-        Field fid = new StringField("id",id,Field.Store.YES);
+        Field fid = new TextField("id",id,Field.Store.YES);
         Field ftype = new StringField("type","concept",Field.Store.YES);
         Field furl = new StringField("url",url,Field.Store.YES);
         Field fname = new TextField("name",name,Field.Store.YES);
@@ -56,7 +56,7 @@ public class createIndex {
     public void addInstance(String id, String name, String url, String comment, String supplement, String alias,
                             String related, String same, String comment_ins, String pro) throws IOException {
         Document doc = new Document();
-        Field fid = new StringField("id",id,Field.Store.YES);
+        Field fid = new TextField("id",id,Field.Store.YES);
         Field furl = new StringField("url",url,Field.Store.YES);
         Field fname = new TextField("name",name,Field.Store.YES);
         Field frelated = new TextField("related",related,Field.Store.YES);
@@ -87,7 +87,7 @@ public class createIndex {
 //        Document document = new Document();
 //        System.out.println(id);
         Document doc = new Document();
-        Field fid = new StringField("id",id,Field.Store.YES);
+        Field fid = new TextField("id",id,Field.Store.YES);
         Field flabel = new TextField("label",label,Field.Store.YES);
         Field ffullname = new TextField("fullname",fullname,Field.Store.YES);
         Field ftype = new StringField("type","property",Field.Store.YES);
