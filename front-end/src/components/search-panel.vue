@@ -13,25 +13,34 @@
 </template>
 
 <script>
+import communication from "../utils/communication";
 export default {
   name: "search-panel",
   data: function() {
     return {
       keyword: '',
       imgSrc: require('../assets/logo.png'),
-      searchSrc: 'https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=0&rsv_idx=1&tn=baidu&wd=',
       span_dis: false,
     }
   },
   methods:{
     search: function() {
-      window.open(this.searchSrc + this.keyword);
+      console.log("sending")
+      if (this.keyword !== '') {
+        console.log(this.keyword)
+        // var message = {"title": "title", "content": "content", "user": "name", "timestamp": "time"};
+        communication.components.testConnect(this.keyword, this.logging)
+      }
     },
     clearInput: function() {
       this.keyword = '';
     },
     input_watch: function () {
       this.span_dis = this.keyword !== '';
+    },
+    logging: function(result) {
+      console.log("back")
+      console.log(result)
     }
   }
 }
