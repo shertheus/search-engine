@@ -41,7 +41,7 @@ public class Main {
 //        gatewayServer.start();
 //        System.out.println("Gateway Server Started");
         Serach serach = new Serach();
-        serach.queryIndex("bdi");
+        serach.searchByWord("北京大学生电影节", "");
 
     }
 
