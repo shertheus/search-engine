@@ -27,7 +27,7 @@ class Concept:
         self.instance.append(instance)
 
     def getUrl(self):
-        return url
+        return self.url
 
 
 class Instance:

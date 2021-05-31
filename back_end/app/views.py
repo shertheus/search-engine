@@ -6,6 +6,9 @@ from django.http import JsonResponse, HttpResponse
 from .models import Concept
 import json
 from django.core.exceptions import ValidationError
+from py4j.java_gateway import JavaGateway
+
+gateway = JavaGateway()
 
 
 def res(request):
@@ -14,20 +17,14 @@ def res(request):
             'code': code,
             'data': data
         }, status=code)
-    print(request.GET.get('keyword'))
-    # try:
-    #     data = json.loads(request.body)
-    # except ValidationError as e:
-    #     return gen_response(400, "Validation Error of user: {}".format(e))
-    # print(data['title'])
 
-    l = []
-    for i in range(0, 10):
-        l.append(str(i))
-    response = {
-        'id': "id",
-        'data': [{
-            'title': li,
-        } for li in l],
-    }
-    return JsonResponse(response, status=200)
+    keyword = request.GET.get('keyword')
+    res = gateway.entry_point.searchByWord(keyword, "")
+    print(res)
+    # try:
+    #     res = json.dumps(res)
+    #     print(res)
+    # except ValidationError as e:
+    #     print("OOOOOOO")
+
+    return gen_response(200, res)

@@ -7,9 +7,10 @@ import java.io.IOException;
 
 public class Main {
     public createIndex index;
-
+    public Serach serach;
     public Main() throws IOException {
         this.index = new createIndex();
+        this.serach = new Serach();
     }
 
     public boolean getConceptString(String id, String name, String url, String related, String same, String sub, String instance) throws IOException {
@@ -33,6 +34,10 @@ public class Main {
         this.index.writerCommit();
         return true;
     }
+
+    public String searchByWord(String keyword, String type) throws IOException {
+        return this.serach.searchByWord(keyword, type);
+    }
     public static void main(String[] args) throws IOException {
 
 //        Main app = new Main();
@@ -41,8 +46,9 @@ public class Main {
 //        gatewayServer.start();
 //        System.out.println("Gateway Server Started");
         Serach serach = new Serach();
-        serach.searchByWord("北京大学生电影节", "");
-
+//        System.out.println(serach.searchByID("bdi4996761", true));
+//        System.out.println(serach.searchByWord("北京", ""));
+        serach.searchWhatRelation("老爷", "省", "", "");
     }
 
 }
