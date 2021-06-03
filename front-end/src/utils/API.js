@@ -1,7 +1,7 @@
-const API={
-    SEARCH:{
-        path:"/api/search",
-        method:"get"
+const API = {
+    SEARCH: {
+        path: "/api/search",
+        method: "get"
     },
 }
 
