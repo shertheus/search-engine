@@ -18,8 +18,17 @@ import static org.apache.lucene.queryparser.classic.QueryParserConstants.AND;
 
 public class Serach {
     public String getTypeFiled(String type) {
-        if (type.equals("")){
+        if (type.equals("all")){
             return  "";
+        }
+        else if (type.equals("not concept")){
+            return " AND (type:instance OR type:property)";
+        }
+        else if (type.equals("not instance")){
+            return " AND (type:concept OR type:property)";
+        }
+        else if (type.equals("not property")){
+            return " AND (type:concept OR type:instance)";
         }
         else {
             return " AND type:" + type;
@@ -45,34 +54,96 @@ public class Serach {
 //        }
 //    }
 
-    public String transDoc(Document document){
+    public String transDoc(Document document) throws IOException {
         String j = "id///";
         j = j + document.get("id") + "%%type///";
         j = j + document.get("type") + "%%name///";
         if (document.get("type").equals("concept")){
             j = j + document.get("name") + "%%url///";
             j = j + document.get("url") + "%%related///";
-            j = j + document.get("related") + "%%same///";
-            j = j + document.get("same") + "%%sub///";
-            j = j + document.get("sub") + "%%instance///";
-            j = j + document.get("instance");
+            j = j + document.get("related") + "%%rname///";
+            j = j + transString(document.get("related")) + "%%same///";
+            j = j + document.get("same") +  "%%sname///";
+            j = j + transString(document.get("same"))+ "%%sub///";
+            j = j + document.get("sub") + "%%subname///";
+            j = j + transString(document.get("sub")) + "%%instance///";
+            j = j + document.get("instance") + "%%iname///";
+            j = j + transString(document.get("instance"));
         }
         else if (document.get("type").equals("instance")){
             j = j + document.get("name") + "%%url///";
             j = j + document.get("url") + "%%related///";
-            j = j + document.get("related") + "%%same///";
-            j = j + document.get("same") + "%%comment///";
+            j = j + document.get("related") + "%%rname///";
+            j = j + transString(document.get("related")) + "%%same///";
+            j = j + document.get("same") + "%%sname///";
+            j = j + transString(document.get("same")) + "%%comment///";
             j = j + document.get("comment") + "%%supplement///";
             j = j + document.get("supplement") + "%%alias///";
             j = j + document.get("alias") + "%%pro///";
-            j = j + document.get("pro");
+            j = j + dePro(document.get("pro")) + "%%pname///";
+            j = j + transPro(document.get("pro"));
         }
         else {
-            j = j + document.get("name") + "%%label///";
             j = j + document.get("label") + "%%fullname///";
             j = j + document.get("fullname");
         }
+        System.out.println(j);
         return j;
+    }
+
+    public String transString(String s) throws IOException {
+        if (s.equals("[]")){
+            return s;
+        }
+        String[] slist = s.substring(1, s.length() - 1).split(", ");
+        String res = "[";
+        for (String tmp : slist){
+            String t = tmp.substring(1, tmp.length() - 1);
+            String name = searchByID(t, false);
+            res = res + name + ", ";
+        }
+        res = res.substring(0, res.length() - 2) + "]";
+        return res;
+    }
+
+    public String dePro(String s) {
+        String all = "[";
+        String[] slist = s.substring(1, s.length() - 1).split(", ");
+        for (String tmp : slist){
+            if (all.contains(tmp)){
+                continue;
+            }
+            all = all + tmp;
+        }
+        all = all.substring(0, all.length() - 1) + "]";
+        return all;
+    }
+
+    public String transPro(String s) throws IOException {
+//        System.out.println(s);
+        String [] ll = new String[2];
+        if (s.equals("[]")){
+            return s;
+        }
+        String[] slist = s.substring(1, s.length() - 1).split(", ");
+        String res = "[";
+        String all = "";
+        for (String tmp : slist){
+            if (all.contains(tmp)){
+                continue;
+            }
+            all = all + tmp;
+            String t = tmp.substring(1, tmp.length() - 1);
+            if (!t.contains("-")){
+                continue;
+            }
+            String[] tlist = t.split("-");
+            t = t .replaceFirst(tlist[0] + "-", "");
+            String name = searchByID(tlist[0], false);
+            res = res + name + ", ";
+        }
+        res = res.substring(0, res.length() - 2) + "]";
+        return res;
     }
 
     public String transDocLess(Document document){
@@ -108,11 +179,13 @@ public class Serach {
         Directory directory = FSDirectory.open(new File("indexSource").toPath());
         IndexReader reader = DirectoryReader.open(directory);
         IndexSearcher searcher = new IndexSearcher(reader);
-        TopDocs topDocs = searcher.search(query, 2);
+        TopDocs topDocs = searcher.search(query, 20);
 //        System.out.println(topDocs.scoreDocs.length);
         String res = topDocs.scoreDocs.length + "%%%";
         for (ScoreDoc scoreDoc : topDocs.scoreDocs) {
             Document hitDoc = searcher.doc(scoreDoc.doc);
+            System.out.println("pro");
+            System.out.println(hitDoc.get("pro"));
             res = res + transDocLess(hitDoc) + "%%%";
         }
         return res;
@@ -123,11 +196,18 @@ public class Serach {
         IndexSearcher searcher = new IndexSearcher(reader);
         Query query = new TermQuery(new Term("id", id));
         TopDocs topDocs = searcher.search(query, 1);
+//        System.out.println("id:" + id);
         Document doc = searcher.doc(topDocs.scoreDocs[0].doc);
+//        return doc.get("pro");
         if (flag){
             return transDoc(doc);
         }else {
-            return doc.get("name");
+            if (doc.get("type").equals("property")) {
+                return doc.get("label");
+            }
+            else {
+                return doc.get("name");
+            }
         }
     }
 

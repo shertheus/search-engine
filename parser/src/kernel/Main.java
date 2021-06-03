@@ -38,17 +38,21 @@ public class Main {
     public String searchByWord(String keyword, String type) throws IOException {
         return this.serach.searchByWord(keyword, type);
     }
+
+    public String searchById(String id) throws IOException {
+        return this.serach.searchByID(id, true);
+    }
     public static void main(String[] args) throws IOException {
 
 //        Main app = new Main();
-//        // py4j服务
 //        GatewayServer gatewayServer = new GatewayServer(app);
 //        gatewayServer.start();
 //        System.out.println("Gateway Server Started");
         Serach serach = new Serach();
-        System.out.println(serach.searchByID("bdi4996761", true));
-//        System.out.println(serach.searchByWord("北京", ""));
-//        serach.searchWhatRelation("老爷", "省", "", "");
+//
+//        System.out.println( serach.searchByID("eni2020540", true));
+//        System.out.println(serach.searchByWord("北京", "all"));
+        serach.searchWhatRelation("老爷", "省", "all", "all");
     }
 
 }

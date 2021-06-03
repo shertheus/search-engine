@@ -17,14 +17,19 @@ def res(request):
             'code': code,
             'data': data
         }, status=code)
+    print(request.GET.keys())
+    print(type(request.GET.get('ftype')))
+    ftype = request.GET.get('ftype')
+    if ftype == 'word':
+        keyword = request.GET.get('keyword')
+        ttype = request.GET.get('type')
+        print(ttype)
+        res = gateway.entry_point.searchByWord(keyword, ttype)
+    else:
+        id = request.GET.get('id')
+        print(id)
+        res = gateway.entry_point.searchById(id)
+        print(res)
 
-    keyword = request.GET.get('keyword')
-    res = gateway.entry_point.searchByWord(keyword, "")
-    print(res)
-    # try:
-    #     res = json.dumps(res)
-    #     print(res)
-    # except ValidationError as e:
-    #     print("OOOOOOO")
 
     return gen_response(200, res)
