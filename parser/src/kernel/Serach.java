@@ -63,12 +63,33 @@ public class Serach {
             j = j + document.get("related") + "%%same///";
             j = j + document.get("same") + "%%comment///";
             j = j + document.get("comment") + "%%supplement///";
-            j = j + document.get("supplement") + "'alias///";
+            j = j + document.get("supplement") + "%%alias///";
             j = j + document.get("alias") + "%%pro///";
             j = j + document.get("pro");
         }
         else {
             j = j + document.get("name") + "%%label///";
+            j = j + document.get("label") + "%%fullname///";
+            j = j + document.get("fullname");
+        }
+        return j;
+    }
+
+    public String transDocLess(Document document){
+        String j = "id///";
+        j = j + document.get("id") + "%%type///";
+        j = j + document.get("type") + "%%name///";
+        if (document.get("type").equals("concept")){
+            j = j + document.get("name") + "%%url///";
+            j = j + document.get("url");
+        }
+        else if (document.get("type").equals("instance")){
+            j = j + document.get("name") + "%%url///";
+            j = j + document.get("url") + "%%comment///";
+            j = j + document.get("comment");
+        }
+        else {
+            j = j + document.get("name") + "%%name///";
             j = j + document.get("label") + "%%fullname///";
             j = j + document.get("fullname");
         }
@@ -92,7 +113,7 @@ public class Serach {
         String res = topDocs.scoreDocs.length + "%%%";
         for (ScoreDoc scoreDoc : topDocs.scoreDocs) {
             Document hitDoc = searcher.doc(scoreDoc.doc);
-            res = res + transDoc(hitDoc) + "%%%";
+            res = res + transDocLess(hitDoc) + "%%%";
         }
         return res;
     }
@@ -147,17 +168,17 @@ public class Serach {
             Document doc = searcher.doc(scoreDoc1.doc);
             if (doc.get("type").equals("instance")){
                 if (doc.get("alias").contains(element2)){
-                    res = res + "alias" + "=-=" + transDoc(doc) + "=-=" + element2 + "%%%";
+                    res = res + "alias" + "=-=" + transDocLess(doc) + "=-=" + element2 + "%%%";
                     cnt++;
 //                    System.out.println(doc.get("name") + " alias " + doc.get("alias"));
                 }
                 if (doc.get("supplement").contains(element2)){
-                    res = res + "supplement" + "=-=" + transDoc(doc) + "=-=" + element2 + "%%%";
+                    res = res + "supplement" + "=-=" + transDocLess(doc) + "=-=" + element2 + "%%%";
                     cnt++;
 //                    System.out.println(doc.get("name") + " supplement " + doc.get("supplement"));
                 }
                 if (doc.get("comment").contains(element2)){
-                    res = res + "comment" + "=-=" + transDoc(doc) + "=-=" + element2 + "%%%";
+                    res = res + "comment" + "=-=" + transDocLess(doc) + "=-=" + element2 + "%%%";
                     cnt++;
 //                    System.out.println(doc.get("name") + " comment " + doc.get("comment"));
                 }
@@ -167,17 +188,17 @@ public class Serach {
             Document doc = searcher.doc(scoreDoc2.doc);
             if (doc.get("type").equals("instance")){
                 if (doc.get("alias").contains(element1)){
-                    res = res + "alias" + "=-=" + transDoc(doc) + "=-=" + element1 + "%%%";
+                    res = res + "alias" + "=-=" + transDocLess(doc) + "=-=" + element1 + "%%%";
                     cnt++;
 //                    System.out.println(doc.get("name") + " alias " + doc.get("alias"));
                 }
                 if (doc.get("supplement").contains(element1)){
-                    res = res + "supplement" + "=-=" + transDoc(doc) + "=-=" + element1 + "%%%";
+                    res = res + "supplement" + "=-=" + transDocLess(doc) + "=-=" + element1 + "%%%";
                     cnt++;
 //                    System.out.println(doc.get("name") + " supplement " + doc.get("supplement"));
                 }
                 if (doc.get("comment").contains(element1)){
-                    res = res + "comment" + "=-=" + transDoc(doc) + "=-=" + element1 + "%%%";
+                    res = res + "comment" + "=-=" + transDocLess(doc) + "=-=" + element1 + "%%%";
                     cnt++;
 //                    System.out.println(doc.get("name") + " comment " + doc.get("comment"));
                 }
@@ -195,82 +216,82 @@ public class Serach {
                 String Type2 = doc2.get("type");
                 if (Type1.equals("concept")){
                     if (doc1.get("related").contains(id2)){
-                        res = res + "related" + "=-=" + transDoc(doc1) + "=-=" + transDoc(doc2) + "%%%";
+                        res = res + "related" + "=-=" + transDocLess(doc1) + "=-=" + transDocLess(doc2) + "%%%";
                         cnt++;
 //                        System.out.println(name1 + " related " + name2);
                     }
                     if (doc1.get("same").contains(id2)){
-                        res = res + "same" + "=-=" + transDoc(doc1) + "=-=" + transDoc(doc2) + "%%%";
+                        res = res + "same" + "=-=" + transDocLess(doc1) + "=-=" + transDocLess(doc2) + "%%%";
                         cnt++;
 //                        System.out.println(name1 + " same " + name2);
                     }
                     if (doc1.get("sub").contains(id2)){
-                        res = res + "sub" + "=-=" + transDoc(doc1) + "=-=" + transDoc(doc2) + "%%%";
+                        res = res + "sub" + "=-=" + transDocLess(doc1) + "=-=" + transDocLess(doc2) + "%%%";
                         cnt++;
 //                        System.out.println(name1 + " sub " + name2);
                     }
                     if (doc1.get("instance").contains(id2)){
-                        res = res + "instanceof" + "=-=" + transDoc(doc1) + "=-=" + transDoc(doc2) + "%%%";
+                        res = res + "instanceof" + "=-=" + transDocLess(doc1) + "=-=" + transDocLess(doc2) + "%%%";
                         cnt++;
 //                        System.out.println(name1 + " instanceof " + name2);
                     }
                 }
                 else if (Type1.equals("instance")) {
                     if (doc1.get("related").contains(id2)){
-                        res = res + "related" + "=-=" + transDoc(doc1) + "=-=" + transDoc(doc2) + "%%%";
+                        res = res + "related" + "=-=" + transDocLess(doc1) + "=-=" + transDocLess(doc2) + "%%%";
                         cnt++;
 //                        System.out.println(name1 + " related " + name2);
                     }
                     if (doc1.get("same").contains(id2)){
-                        res = res + "same" + "=-=" + transDoc(doc1) + "=-=" + transDoc(doc2) + "%%%";
+                        res = res + "same" + "=-=" + transDocLess(doc1) + "=-=" + transDocLess(doc2) + "%%%";
                         cnt++;
 //                        System.out.println(name1 + " same " + name2);
                     }
                 }
                 else {
                     if (Type2.equals("instance") && doc2.get("pro").contains(id1)){
-                        res = res + "property" + "=-=" + transDoc(doc2) + "=-=" + transDoc(doc1) + "%%%";
+                        res = res + "property" + "=-=" + transDocLess(doc2) + "=-=" + transDocLess(doc1) + "%%%";
                         cnt++;
 //                        System.out.println(name2 + " property " + name1);
                     }
                 }
                 if (Type2.equals("concept")){
                     if (doc2.get("related").contains(id1)){
-                        res = res + "related" + "=-=" + transDoc(doc2) + "=-=" + transDoc(doc1) + "%%%";
+                        res = res + "related" + "=-=" + transDocLess(doc2) + "=-=" + transDocLess(doc1) + "%%%";
                         cnt++;
 //                        System.out.println(name2 + " related " + name1);
                     }
                     if (doc2.get("same").contains(id1)){
-                        res = res + "same" + "=-=" + transDoc(doc2) + "=-=" + transDoc(doc1) + "%%%";
+                        res = res + "same" + "=-=" + transDocLess(doc2) + "=-=" + transDocLess(doc1) + "%%%";
                         cnt++;
 //                        System.out.println(name2 + "same " + name1);
                     }
                     if (doc2.get("sub").contains(id1)){
-                        res = res + "subclass" + "=-=" + transDoc(doc2) + "=-=" + transDoc(doc1) + "%%%";
+                        res = res + "subclass" + "=-=" + transDocLess(doc2) + "=-=" + transDocLess(doc1) + "%%%";
                         cnt++;
 //                        System.out.println(name2 + " sub " + name1);
                     }
                     if (doc2.get("instance").contains(id1)){
-                        res = res + "instanceof" + "=-=" + transDoc(doc2) + "=-=" + transDoc(doc1) + "%%%";
+                        res = res + "instanceof" + "=-=" + transDocLess(doc2) + "=-=" + transDocLess(doc1) + "%%%";
                         cnt++;
 //                        System.out.println(name2 + " instanceof " + name1);
                     }
                 }
                 else if (Type2.equals("instance")) {
                     if (doc2.get("related").contains(id1)){
-                        res = res + "related" + "=-=" + transDoc(doc2) + "=-=" + transDoc(doc1) + "%%%";
+                        res = res + "related" + "=-=" + transDocLess(doc2) + "=-=" + transDocLess(doc1) + "%%%";
                         cnt++;
 //                        System.out.println(name2 + " related " + name1);
                     }
                     if (doc2.get("same").contains(id1)){
-                        res = res + "same" + "=-=" + transDoc(doc2) + "=-=" + transDoc(doc1) + "%%%";
+                        res = res + "same" + "=-=" + transDocLess(doc2) + "=-=" + transDocLess(doc1) + "%%%";
                         cnt++;
 //                        System.out.println(name2 + "same " + name1);
                     }
                 }
                 else {
                     if (Type1.equals("instance") && doc1.get("pro").contains(id2)){
-                        res = res + "property" + "=-=" + transDoc(doc2) + "=-=" + transDoc(doc1) + "%%%";
+                        res = res + "property" + "=-=" + transDocLess(doc2) + "=-=" + transDocLess(doc1) + "%%%";
                         cnt++;
 //                        System.out.println(name1 + " pro " + name2);
                     }

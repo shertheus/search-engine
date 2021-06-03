@@ -46,9 +46,9 @@ public class Main {
 //        gatewayServer.start();
 //        System.out.println("Gateway Server Started");
         Serach serach = new Serach();
-//        System.out.println(serach.searchByID("bdi4996761", true));
+        System.out.println(serach.searchByID("bdi4996761", true));
 //        System.out.println(serach.searchByWord("北京", ""));
-        serach.searchWhatRelation("老爷", "省", "", "");
+//        serach.searchWhatRelation("老爷", "省", "", "");
     }
 
 }
