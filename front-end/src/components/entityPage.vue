@@ -12,36 +12,37 @@
 				<el-link class="url" :href=this.curl target="_blank">{{curl}}</el-link>
 			</el-row>
 			<el-row>
-				<p class="obj">related :</p>
-				<p class="list" :crelated="crelated" v-for="x in crelated" :key="x.id">
+				<p class="obj" v-show="this.crelated.length!==0">related :</p>
+<!--        <p v-if="this.crelated.length===0" style="float: left">  none</p>-->
+				<p class="list" :crelated="crelated" v-for="x in crelated" :key="x.id" >
 					<el-button class="entbut" @click="searchID(x.id)">{{x.ctype}}</el-button>
 				</p>
 			</el-row>
 			<el-row>
-				<p class="obj">same :</p>
+				<p class="obj" v-show="this.csame.length!==0">same :</p>
 				<p class="list" :csame="csame" v-for="x in csame" :key="x.id">
 					<el-button class="entbut" @click="searchID(x.id)">{{x.ctype}}</el-button>
 				</p>
 			</el-row>
 			<el-row>
-				<p class="obj">instance :</p>
+				<p class="obj" v-show="this.cinstance.length!==0">instance :</p>
 				<p class="list" :cinstance="cinstance" v-for="x in cinstance" :key="x.id">
 					<el-button class="entbut" @click="searchID(x.id)">{{x.ctype}}</el-button>
 				</p>
 			</el-row>
 			<el-row>
-				<p class="obj">sub :</p>
+				<p class="obj" v-show="this.csub.length!==0">sub :</p>
 				<p class="list" :csub="csub" v-for="x in csub" :key="x.id">
 					<el-button class="entbut" @click="searchID(x.id)">{{x.ctype}}</el-button>
 				</p>
 			</el-row>
 		</div>
-		<div v-if="type=='instance'">
+		<div v-if="type==='instance'">
 			<el-row>
 				<el-link class="url" :href=this.iurl target="_blank">{{iurl}}</el-link>
 			</el-row>
 			<el-row>
-				<p class="obj">comment : {{icomment}}</p>
+				<p class="obj" v-show="this.icomment!==''">comment : {{icomment}}</p>
 			</el-row>
 			<!--            <el-row>-->
 			<!--                <p class="obj">comment_ins :</p>-->
@@ -50,32 +51,32 @@
 			<!--                </p>-->
 			<!--            </el-row>-->
 			<el-row>
-				<p class="obj">related :</p>
+				<p class="obj" v-show="this.irelated.length!==0">related :</p>
 				<p class="list" :irelated="irelated" v-for="x in irelated" :key="x.id">
 					<el-button class="entbut" @click="searchID(x.id)">{{x.itype}}</el-button>
 				</p>
 			</el-row>
 			<el-row>
-				<p class="obj">same :</p>
+				<p class="obj" v-show="this.isame.length!==0">same :</p>
 				<p class="list" :isame="isame" v-for="x in isame" :key="x.id">
 					<el-button class="entbut" @click="searchID(x.id)">{{x.itype}}</el-button>
 				</p>
 			</el-row>
 			<el-row>
-				<p class="obj">property :</p>
+				<p class="obj" v-show="this.iproperty.length!==0">property :</p>
 				<p class="list" :iproperty="iproperty" v-for="x in iproperty" :key="x.id1">
 					<el-button class="entbut" @click="searchID(x.id1)">{{x.name1}}</el-button>:
 					<el-button class="entbut" @click="searchID(x.id2)">{{x.name2}}</el-button>|
 				</p>
 			</el-row>
 			<el-row>
-				<p class="obj">alias :</p>
+				<p class="obj" v-show="this.ialias.length!==0">alias :</p>
 				<p class="list" :ialias="ialias" v-for="x in ialias" :key="x.id">
 					{{"\t[" + x.itype + "]\t"}}
 				</p>
 			</el-row>
 			<el-row>
-				<p class="obj">supplement :</p>
+				<p class="obj" v-show="this.isupplement.length!==0">supplement :</p>
 				<p class="list" :isupplement="isupplement" v-for="x in isupplement" :key="x.id">
 					{{"\t[" + x.itype + "]\t"}}
 				</p>
@@ -132,6 +133,7 @@ export default {
 			iname: "",
 			pname: "",
 
+      lastP:1,
 
 		}
 	},
@@ -140,11 +142,11 @@ export default {
 			this.$emit('childByValue', 0);
 		},
 		return1: function() {
-			this.$emit('childByValue', 1);
+			this.$emit('childByValue', this.lastP)
 		},
 		searchID: function(id) { //搜索id对应的所有信息并填入searchresult
 
-			if (id !== "null") {
+			if (id !== "null" && id !== "") {
 				communication.components.entityConnect(id, this.entity_back)
 				//  this.searchresult = "id///bdi1569743%%type///instance%%name///北京北京%%url///https://baike.baidu.com/item/%E5%8C%97%E4%BA%AC%E5%8C%97%E4%BA%AC%2F1551988%%related///[\"bdi1834586\", \"bdi1561325\", \"bdi5440238\", \"bdi514416\"]%%same///[]%%comment///《北京 北京》北京民谣歌手 郝云在2008年发布的专辑《郝云 北京》的主打歌曲，曾经流传于北京的大街小巷。%%supplement///[\"郝云演唱歌曲\"]%%alias///[]%%pro///[\"bdp80-[[bdi7339683|郝云]]\", \"bdp76-[[bdi7339683|郝云]]\", \"bdp122-[[bdi7339683|郝云]]\", \"bdp68-[[bdi7339683|郝云]]\", \"bdp16-北京北京\"]";
 
@@ -158,7 +160,8 @@ export default {
 			this.searchresult = result
 			this.updata()
 		},
-		refrush: function(nid) {
+		refrush: function(nid,lastpage) {
+      this.lastP = lastpage
 			this.searchID(nid)
 		},
 		updata: function() {
@@ -364,12 +367,12 @@ export default {
 						// console.log(idd)
 						if (idd != null) {
 							if (idd.length === 2) {
-								var nam2 = element.match(/(?<=-).*?(?=")/g)
+								var nam2 = element.split("-")[1]
 								this.iproperty.push({
 									id1: idd[0],
 									name1: crrname1[count],
 									id2: idd[1],
-									name2: nam2[0], //TODO
+									name2: nam2, //TODO
 								})
 								count += 1
 							} else {

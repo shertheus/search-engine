@@ -7,7 +7,7 @@ export default {
     components: {
         testConnect,
         entityConnect,
-        // relationConnect,
+        relationConnect,
     },
 }
 
@@ -32,12 +32,12 @@ function entityConnect(id, callback){
     })
 }
 
-// function relationConnect(name1, name2, callback){
-//     axios({
-//         url : API.SEARCH.path,
-//         method : API.SEARCH.method,
-//         params: {"content":"content","id":id}
-//     }).then(function (response){
-//         callback(response.data)
-//     })
-// }
+function relationConnect(name1, name2, type1, type2 ,callback){
+    axios({
+        url : API.SEARCH.path,
+        method : API.SEARCH.method,
+        params: {"ftype":"relation","name1":name1,"name2":name2,"type1":type1,"type2":type2}
+    }).then(function (response){
+        callback(response.data['data'])
+    })
+}

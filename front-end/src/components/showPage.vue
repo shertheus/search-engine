@@ -9,6 +9,7 @@
                 <option v-for="x in typelist" :key="x.id">{{x.ctype}}</option>
             </select>
         </div>
+        <div v-if="this.messageList.length===0"  style="margin-bottom: auto;margin-top: 300px; font-size: 200px;">  无</div>
         <div id="message-list" style="margin-top:50px">
             <MessageBlock v-on:childByValue="childByValue" v-for="x in messageList" :key="x.id" v-bind:id="x.id" :name="x.name" :type="x.type" :url="x.url" :comment="x.comment">
             </MessageBlock>
@@ -69,7 +70,7 @@ export default {
         },
         childByValue: function(childValue, sid) { //block的按钮，进入具体页
             this.$emit('searchId', sid)
-            this.$emit('childByValue', childValue)
+            this.$emit('childByValue', childValue,1)
         },
         search: function() {
             console.log("sending")
@@ -91,6 +92,7 @@ export default {
             console.log("logging in showPage")
             console.log(result)
             this.searchS = result
+            this.$emit('searchresult', result)
             this.clearShow()
             this.addShow()
         },
@@ -201,7 +203,7 @@ export default {
     text-align: center;
     cursor: pointer;
     font-size: 20px;
-    right: 110px;
+    right: 35%;
     top: 12px
 }
 

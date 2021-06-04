@@ -11,6 +11,37 @@
 				<option v-for="x in typelist" :key="x.id">{{x.ctype}}</option>
 			</select>
 		</div>
+		<el-row :gutter="20"  style="background-color: rgb(220, 245, 175); border: 1px solid black;width:900px;margin-top: 100px;margin-right:auto;margin-left:auto;">
+			<el-row :gutter="20"  style="background-color: mediumseagreen; border: 1px solid black;width:800px;margin-top: 40px;margin-right:auto;margin-left:auto;">
+			<el-col :span="6"><div  style="display:flex;width:80px;margin-right:auto;margin-left:auto; margin-top: 10px;margin-bottom: 10px; font-size: 28px;color: black">word1:</div></el-col>
+			<el-col :span="10">
+				<div  style="display:flex;width:200px;margin-right:auto;margin-left:auto; margin-top: 6px; font-size: 28px;color: black">
+					<el-input v-model="word1"  placeholder="请输入内容"></el-input></div></el-col>
+			<el-col :span="6">
+				<div style="display:flex;width:100px;margin-right:auto;margin-left:auto; margin-top: 6px; font-size: 28px;color: black">
+					<select class="search-type2" v-model="searchType1">
+					<option v-for="x in typelist" :key="x.id">{{x.ctype}}</option>
+					</select>	
+				</div>
+			</el-col>
+		</el-row>
+		<el-row :gutter="20"  style="background-color: mediumseagreen; border: 1px solid black;width:800px;margin-top: 10px;margin-right:auto;margin-left:auto;">
+			<el-col :span="6"><div  style="display:flex;width:80px;margin-right:auto;margin-left:auto; margin-top: 10px;margin-bottom: 10px; font-size: 28px;color: black">word2:</div></el-col>
+			<el-col :span="10">
+				<div  style="display:flex;width:200px;margin-right:auto;margin-left:auto; margin-top: 6px; font-size: 28px;color: black">
+					<el-input v-model="word2"  placeholder="请输入内容"></el-input></div></el-col>
+			<el-col :span="6">
+				<div style="display:flex;width:100px;margin-right:auto;margin-left:auto; margin-top: 6px; font-size: 28px;color: black">
+					<select class="search-type2" v-model="searchType2">
+					<option v-for="x in typelist" :key="x.id">{{x.ctype}}</option>
+					</select>	
+				</div>
+			</el-col>
+		</el-row>
+		<el-row :gutter="20"  style="width:800px;margin-top: 10px;margin-right:auto;margin-left:auto;">
+			<button class="search-btn"  @click="Rsearch()" style="margin-top: 10px;margin-bottom: 10px;margin-left:80%;">搜索</button>
+		</el-row>
+		</el-row>
 	</div>
 </template>
 <script>
@@ -19,6 +50,8 @@ export default {
 	name: "search-panel",
 	data: function() {
 		return {
+			word1:'',
+			word2:'',
 			keyword: '',
 			imgSrc: require('../assets/logo.png'),
 			span_dis: false,
@@ -32,6 +65,8 @@ export default {
 				{ id: 6, ctype: "not property" }
 			],
 			searchType: "all",
+			searchType1:"all",
+			searchType2:"all",
 			searchS: "2%%%id///bdi1569743%%type///instance%%name///北京北京%%url///https://baike.baidu.com/item/%E5%8C%97%E4%BA%AC%E5%8C%97%E4%BA%AC%2F1551988%%comment///《北京 北京》北京民谣歌手 郝云在2008年发布的专辑《郝云 北京》的主打歌曲，曾经流传于北京的大街小巷。%%%id///bdi1569747%%type///instance%%name///北京北京%%url///https://baike.baidu.com/item/%E5%8C%97%E4%BA%AC%E5%8C%97%E4%BA%AC%2F19210090%%comment///《北京北京》是G.E.M. 邓紫棋在 湖南卫视2016跨年晚会 开唱并于新年之际发布录音室单曲版本， 汪峰原唱、作词、作曲。   邓紫棋演唱版本由 Lupo Groinig重新编曲。%%%",
 		}
 	},
@@ -48,6 +83,19 @@ export default {
 
 			}
 
+		},
+		Rsearch: function() {
+			console.log("sending")
+			if (this.word1 !== '' && this.word2 !== '') {
+				console.log(this.word1+ " " +this.word2)
+				communication.components.relationConnect(this.word1, this.word2,this.searchType1, this.searchType2, this.sendRe)
+			}
+		},
+		sendRe: function(result) {
+			console.log("rback")
+			console.log(result)
+			this.$emit('searchrelationresult', result)
+			this.$emit('childByValue', 3);
 		},
 		clearInput: function() {
 			this.keyword = '';
@@ -126,6 +174,17 @@ export default {
 	width: 120px;
 	border: 1px solid mediumseagreen;
 	background-color: mediumseagreen;
+	color: white;
+	font-size: 16px;
+	font-weight: bold;
+	float: left;
+	cursor: pointer
+}
+.search-type2 {
+	height: 40px;
+	width: 120px;
+	border: 1px solid rgb(157, 235, 14);
+	background-color: rgb(157, 235, 14);
 	color: white;
 	font-size: 16px;
 	font-weight: bold;

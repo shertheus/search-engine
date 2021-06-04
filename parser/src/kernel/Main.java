@@ -36,23 +36,28 @@ public class Main {
     }
 
     public String searchByWord(String keyword, String type) throws IOException {
+        System.out.println(this.serach.searchByWord(keyword, type));
         return this.serach.searchByWord(keyword, type);
     }
 
     public String searchById(String id) throws IOException {
         return this.serach.searchByID(id, true);
     }
+
+    public String searchRelation(String name1, String name2, String type1, String type2) throws IOException {
+        return this.serach.searchWhatRelation(name1, name2, type1, type2);
+    }
     public static void main(String[] args) throws IOException {
 
-//        Main app = new Main();
-//        GatewayServer gatewayServer = new GatewayServer(app);
-//        gatewayServer.start();
-//        System.out.println("Gateway Server Started");
-        Serach serach = new Serach();
+        Main app = new Main();
+        GatewayServer gatewayServer = new GatewayServer(app);
+        gatewayServer.start();
+        System.out.println("Gateway Server Started");
+//        Serach serach = new Serach();
 //
 //        System.out.println( serach.searchByID("eni2020540", true));
 //        System.out.println(serach.searchByWord("北京", "all"));
-        serach.searchWhatRelation("老爷", "省", "all", "all");
+//        serach.searchWhatRelation("老爷", "省", "all", "all");
     }
 
 }

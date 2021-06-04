@@ -79,7 +79,7 @@ class Instance:
 
 
 class Property:
-    def __init__(self, _id, label, fullname=None):
+    def __init__(self, _id, label, fullname=""):
         self.id = _id
         self.label = label
         self.fullname = fullname

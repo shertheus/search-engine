@@ -25,6 +25,12 @@ def res(request):
         ttype = request.GET.get('type')
         print(ttype)
         res = gateway.entry_point.searchByWord(keyword, ttype)
+    elif ftype == 'relation':
+        name1 = request.GET.get('name1')
+        name2 = request.GET.get('name2')
+        type1 = request.GET.get('type1')
+        type2 = request.GET.get('type2')
+        res = gateway.entry_point.searchRelation(name1, name2, type1, type2)
     else:
         id = request.GET.get('id')
         print(id)

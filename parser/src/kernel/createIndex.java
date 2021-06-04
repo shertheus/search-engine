@@ -88,7 +88,7 @@ public class createIndex {
 //        System.out.println(id);
         Document doc = new Document();
         Field fid = new TextField("id",id,Field.Store.YES);
-        Field flabel = new TextField("label",label,Field.Store.YES);
+        Field flabel = new TextField("name",label,Field.Store.YES);
         Field ffullname = new TextField("fullname",fullname,Field.Store.YES);
         Field ftype = new StringField("type","property",Field.Store.YES);
 

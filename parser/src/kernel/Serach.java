@@ -18,6 +18,7 @@ import static org.apache.lucene.queryparser.classic.QueryParserConstants.AND;
 
 public class Serach {
     public String getTypeFiled(String type) {
+        System.out.println(type);
         if (type.equals("all")){
             return  "";
         }
@@ -84,7 +85,7 @@ public class Serach {
             j = j + transPro(document.get("pro"));
         }
         else {
-            j = j + document.get("label") + "%%fullname///";
+            j = j + document.get("name") + "%%fullname///";
             j = j + document.get("fullname");
         }
         System.out.println(j);
@@ -161,7 +162,7 @@ public class Serach {
         }
         else {
             j = j + document.get("name") + "%%name///";
-            j = j + document.get("label") + "%%fullname///";
+            j = j + document.get("name") + "%%fullname///";
             j = j + document.get("fullname");
         }
         return j;
@@ -184,8 +185,6 @@ public class Serach {
         String res = topDocs.scoreDocs.length + "%%%";
         for (ScoreDoc scoreDoc : topDocs.scoreDocs) {
             Document hitDoc = searcher.doc(scoreDoc.doc);
-            System.out.println("pro");
-            System.out.println(hitDoc.get("pro"));
             res = res + transDocLess(hitDoc) + "%%%";
         }
         return res;
@@ -202,12 +201,7 @@ public class Serach {
         if (flag){
             return transDoc(doc);
         }else {
-            if (doc.get("type").equals("property")) {
-                return doc.get("label");
-            }
-            else {
-                return doc.get("name");
-            }
+            return doc.get("name");
         }
     }
 
