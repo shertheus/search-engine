@@ -32,7 +32,6 @@ public class Serach {
             return " AND (type:concept OR type:instance)";
         }
         else {
-            System.out.println(type);
             return " AND type:" + type;
         }
     }
@@ -240,9 +239,6 @@ public class Serach {
         ScoreDoc[] docList1 = topDocs1.scoreDocs;
         ScoreDoc[] docList2 = topDocs2.scoreDocs;
         for (ScoreDoc scoreDoc1 : docList1) {
-            if (!type2.equals("all")){
-                break;
-            }
             Document doc = searcher.doc(scoreDoc1.doc);
             if (doc.get("type").equals("instance")){
                 if (doc.get("alias").contains(element2)){
@@ -263,9 +259,6 @@ public class Serach {
             }
         }
         for (ScoreDoc scoreDoc2 : docList2) {
-            if (!type1.equals("all")){
-                break;
-            }
             Document doc = searcher.doc(scoreDoc2.doc);
             if (doc.get("type").equals("instance")){
                 if (doc.get("alias").contains(element1)){
@@ -307,7 +300,7 @@ public class Serach {
 //                        System.out.println(name1 + " same " + name2);
                     }
                     if (doc1.get("sub").contains(id2)){
-                        res = res + "sub" + "=-=" + transDocLess(doc1) + "=-=" + transDocLess(doc2) + "%%%";
+                        res = res + "subclass" + "=-=" + transDocLess(doc1) + "=-=" + transDocLess(doc2) + "%%%";
                         cnt++;
 //                        System.out.println(name1 + " sub " + name2);
                     }

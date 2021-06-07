@@ -30,6 +30,8 @@ def res(request):
         name2 = request.GET.get('name2')
         type1 = request.GET.get('type1')
         type2 = request.GET.get('type2')
+        print(type1)
+        print(type2)
         res = gateway.entry_point.searchRelation(name1, name2, type1, type2)
     else:
         id = request.GET.get('id')

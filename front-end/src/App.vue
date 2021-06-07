@@ -26,6 +26,7 @@ export default {
             sr: "",
             id: "",
             rr:"",
+            RR:"",
         }
     },
     methods: {
@@ -43,7 +44,7 @@ export default {
             }
             if (childValue == 3) {
                 this.$nextTick(() => {
-                    this.$refs.sendrr.searchR(this.rr)
+                    this.$refs.sendrr.searchR(this.rr,this.RR)
                 });
             }
         },
@@ -53,8 +54,9 @@ export default {
         searchId: function(id) {
             this.id = id;
         },
-        searchrelationresult:function(Relation){
+        searchrelationresult:function(Relation,relation){
             this.rr = Relation
+            this.RR = relation
         }
     }
 }

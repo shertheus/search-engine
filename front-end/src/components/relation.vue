@@ -43,6 +43,8 @@ export default {
             type2: "",
             url2: "",
             comment2: "",
+
+            needRelation:"",
         }
     },
     methods: {
@@ -53,8 +55,9 @@ export default {
             this.$emit('searchId', sid)
             this.$emit('childByValue', 2, 3)
         },
-        searchR: function(result) {
+        searchR: function(result,RR) {
             this.list.splice(0, this.list.length)
+            this.needRelation = RR
             this.listS = result
             this.addList()
         },
@@ -128,8 +131,8 @@ export default {
                         }
                     }
                 }
-
-                this.list.push({
+                if(this.needRelation == "all" || this.needRelation == this.relation) {
+                  this.list.push({
                     relation: this.relation,
                     id1: this.id1,
                     name1: this.name1,
@@ -141,7 +144,8 @@ export default {
                     type2: this.type2,
                     url2: this.url2,
                     comment2: this.comment2,
-                })
+                  })
+                }
 
             }
         }
