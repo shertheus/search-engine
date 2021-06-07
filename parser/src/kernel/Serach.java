@@ -32,7 +32,6 @@ public class Serach {
             return " AND (type:concept OR type:instance)";
         }
         else {
-            System.out.println(type);
             return " AND type:" + type;
         }
     }
