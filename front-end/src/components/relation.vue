@@ -52,8 +52,12 @@ export default {
             this.$emit('childByValue', 0);
         },
         searchId: function(sid) {
-            this.$emit('searchId', sid)
-            this.$emit('childByValue', 2, 3)
+            if( sid != '') {
+              this.$emit('searchId', sid)
+              this.$emit('childByValue', 2, 3)
+            }else{
+              alert("cannot click")
+            }
         },
         searchR: function(result,RR) {
             this.list.splice(0, this.list.length)
