@@ -8,6 +8,6 @@
 
 ### 数据读取
 
-1. 启动Java（kernel.Main）‘
+1. 启动Java（kernel.Main）
 2. 进入parser-python文件夹执行trans.py
 
